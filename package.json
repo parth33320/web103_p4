@@ -1,0 +1,24 @@
+{
+  "name": "diy-delight-auto-crafter",
+  "version": "1.0.0",
+  "description": "DIY Auto Crafter - Unit 4 DIY Delight Project",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "node server/server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "reset": "node server/config/reset.js",
+    "build": "npm run build --prefix client",
+    "test": "node --test --test-force-exit server/tests/*.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.13.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
