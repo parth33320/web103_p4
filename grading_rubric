@@ -1,0 +1,15 @@
+Project 4: DIY Delight
+Total Points: 24pts + 2pts bonus
+
+Required Features	Points
+The web app uses React to display data from an API	2
+Data is supplied to the app using a Render PostgreSQL database	4
+The web app has a well-structured user interface	8
+The web app allows the user to save new CustomItem	6
+Saved CustomItems can be edited and deleted in its detail page OR the list view of submitted CustomItems	4
+Total
+24
+Stretch Features	Points
+User is alerted to impossible combos early	2
+Total
+2
