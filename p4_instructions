@@ -1,0 +1,179 @@
+Unit 4: Project 4 - DIY Delight
+Overview
+Nowadays, you can get a custom version of just about anything, like customized shoes, phone cases, or costumes for your pet.
+
+In this project, you'll create an item personalizer that allows users to create custom items and view, edit, or delete ones they have already created. The items can be things that already do have custom options or things that you wish you could customize.
+
+🎯 Goals
+By the end of this assignment, you will be able to...
+
+Develop a web app using React that displays data from an API
+Get, add, edit, and delete data from a PostgreSQL database
+Required Features
+The web app uses React to display data from an API
+Data is supplied to the app using a Render PostgreSQL database
+The web app uses a Render PostgreSQL database
+The PostgreSQL database includes a table that matches the data displayed in the web app
+The web app has a well-structured user interface
+The app provides multiple features of the CustomItem (e.g. car) for the user to customize, (e.g. wheels, exterior, etc.)
+Each customizable feature has multiple options to choose from (e.g. exterior could be red, blue, black, etc.)
+The price of the CustomItem (e.g. car) changes dynamically as different options are selected OR The app displays the total price of all features
+The visual interface changes in response to at least one customizable feature
+Note: At least one option must produce a visible change beyond text — for example, the displayed image, color, or style updates based on the selection. The selected value simply appearing as text, or the price changing, does not count on its own.
+The web app allows the user to save new CustomItem
+The user can submit their choices to save the CustomItem to the list of created CustomItems
+Users can view a list of all submitted CustomItems
+If a user submits a feature combo that is impossible, they should receive an appropriate error message
+Saved CustomItems can be updated and deleted in its detail page OR the list view of submitted CustomItems
+Users can edit a submitted CustomItem from the list view of submitted CustomItems
+Users can delete a submitted CustomItem from the list view of submitted CustomItems
+Screenshot
+View an exemplar of the project here!
+
+A simple version of the app with all the required features implemented:
+
+Screenshot of app with core features implemented
+Stretch Features
+User is alerted to impossible combos early
+e.g., selecting particular options prevents incompatible options from being selected even before form submission
+Resources
+Express Routing
+Express Tutorial: Routes and controllers
+Build a REST API with Node.js: Routes and Controllers
+React Reference: useState
+React Reference: useEffect
+MDN Web Docs: async
+Step 0: Getting Started
+Access and fork the starter code.
+In your terminal, run npm install to install dependencies, then npm run dev to run the web app.
+Take a look at the starter code so you understand its structure and functionality.
+AI opportunity
+
+Use AI to understand provided code → Codebase navigation
+Step 1: Setup a database on Render
+Before proceeding, you'll need to suspend any active Postgres databases. Render's free tier only allows for one active database at a time.
+Want to confirm the suspension procedure? Check it out here ⤵️
+You'll need to create a database on Render for your web app to connect to.
+
+Choose +New in the header, and select Postgres from the dropdown menu.
+Select a name for your database, choose the free tier, and click Create Database.
+This will create an empty PostgreSQL database.
+
+Step 2: Connect to the database
+Now that we have a database on Render, let's connect our web app to it.
+
+
+In the server directory, create a folder called config.
+
+
+Inside the config folder, create a file called database.js.
+
+
+Add the following code to your database.js file:
+
+import pg from 'pg'
+
+const config = {
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    host: process.env.PGHOST,
+    port: process.env.PGPORT,
+    database: process.env.PGDATABASE,
+    ssl: {
+      rejectUnauthorized: false
+    }
+}
+
+export const pool = new pg.Pool(config)
+
+In the server directory, create a new file called .env and add the following variables:
+
+PGUSER=""
+PGPASSWORD=""
+PGHOST=""
+PGPORT=
+PGDATABASE=""
+
+In Render, click on the database you created. Insert the values from the Connections subheader into your .env file as shown below:
+
+PGDATABASE="{Database}"
+PGHOST="{Hostname}.oregon-postgres.render.com"
+PGPASSWORD="{Password}"
+PGPORT={Port}
+PGUSER="{Username}"
+
+In your config directory, create a new file called reset.js to create tables to store the custom items and any other data your web app will need to work with.
+
+AI opportunity
+
+Use AI to understand why your code isn't working → Debugging Database Connections
+Step 3: Setup controllers
+So now that our web app can talk to the database, but next it needs the ability to get, create, edit, and delete items from your custom items table.
+
+In the server directory, create a folder called controllers.
+In the controllers folder, create a file for your custom items table.
+In this file, import the pool from your database.js file.
+Add your functions to get, create, edit, and delete cars from your custom items table.
+Export the functions you create.
+Step 4: Define routes
+Great! Now our web app can connect to the database and access the custom items table. Next, let's set up routes that call these functions when accessed.
+
+
+In the server directory, create a folder called routes.
+
+
+In the routes folder, create files for the routes you need to set up.
+
+
+Add the following code to each routes file:
+
+import express from 'express'
+// import controller for custom items
+
+
+const router = express.Router()
+
+// define routes to get, create, edit, and delete items
+
+
+export default Router
+
+Import your controllers for your custom items.
+
+
+Define routes to get, create, edit, and delete items that use the appropriate function from your controller.
+
+Depending on how you decide to structure the options, you might need to repeat Steps 3 and 4 for additional tables. For example, you might want to create a table for exterior color options and the ability to get all color options and a specific color option by its id.
+
+AI opportunity
+
+Use AI to brainstorm ideas for your code → Structuring API Routes
+Step 5: Update the server
+We have our database, tables, controller, and routes. The last thing we need to do on the backend is tell the server that these routes exist.
+
+
+In the server.js file in the server directory, import your router from your routes files.
+
+
+Specify the API path for the server to use for the routers, for example:
+
+app.use('/api', router)
+Step 6: Connect the frontend to the API
+Phew! Backend is all set up ✅ Let's build the frontend to get the data from the database so the user can get, add, update, and delete items.
+
+In the client directory, create a folder called services in the src folder.
+In the services folder, create a file for your API calls, such as CarsAPI.jsx.
+In this file, define functions to get, add, update, and delete cars by calling the API. For example, getAllCars, getCar, createCar, etc.
+Export the functions.
+If you have additional tables for options and features, create files for the API calls to these tables.
+
+Step 7: Complete the frontend
+The starter code has pages for creating items, viewing an item's details, editing an item, and viewing all items, but they're currently blank! Build these pages to pull the data needed from the database and implement the features.
+
+Complete the pages to allow the user to create items, edit items, view the items that have been created, and view the details for a single item.
+Import the files from the services folder as needed in these pages.
+Step 8: Calculating price or checking feature combinations
+As you work on the frontend, you should create a separate utilities file with functions for calculating the price of the item or checking feature combinations.
+
+Create a folder called utilities in the client\src folder.
+Create files for these functions. For example, a validation file that contains functions for checking feature combinations or a calcprice file that contains functions for getting option prices and calculating the total price of the item.
